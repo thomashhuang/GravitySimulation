@@ -90,10 +90,12 @@ public class SingleBodyTest {
     }
 
     @Test
-    public void issOrbit() {
+    public void issSingleOrbit() {
 
         //After roughly one orbit, the ISS returns to the same place
         //with the same velocity.
+
+        //The orbital period of the ISS in this simulation is SLIGHTLY under 5540 seconds
 
         final int ORBITAL_PERIOD = 5540;
 
@@ -102,7 +104,29 @@ public class SingleBodyTest {
             earthIssSystem.applyGravity();
         }
 
-        assertEquals(earth.getRadius() + 400000, iss.getXPosition(), 100);
+        assertEquals(earth.getRadius() + 400000, iss.getXPosition(), 10);
+        assertEquals(7670, iss.getYVelocity(), 200);
+        assertEquals(0, iss.getXVelocity(), 200);
+        assertEquals(0, iss.getYPosition(), 10000);
+    }
+
+    @Test
+    public void issManyOrbits() {
+
+        //After about 20 orbits, the ISS returns to the same place
+        //with the same velocity.
+
+        //The -6 adjusts for the orbit being a little under 5540 seconds,
+        //stopping the error from accumulating over time.
+
+        final int ORBITAL_PERIOD = 5540 * 20 - 6;
+
+        for (int i = 0; i < ORBITAL_PERIOD; i++) {
+            earthIssSystem.tick();
+            earthIssSystem.applyGravity();
+        }
+
+        assertEquals(earth.getRadius() + 400000, iss.getXPosition(), 10);
         assertEquals(7670, iss.getYVelocity(), 200);
         assertEquals(0, iss.getXVelocity(), 200);
         assertEquals(0, iss.getYPosition(), 10000);
