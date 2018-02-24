@@ -1,4 +1,4 @@
-package com.example;
+package edu.illinois.thomash3;
 
 public class Simulation {
 
