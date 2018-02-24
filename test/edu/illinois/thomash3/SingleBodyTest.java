@@ -2,8 +2,6 @@ package edu.illinois.thomash3;
 
 import org.junit.*;
 
-import javax.swing.text.SimpleAttributeSet;
-
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;

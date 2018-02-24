@@ -1,10 +1,7 @@
 package edu.illinois.thomash3;
 
-import com.sun.tools.classfile.Opcode;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 /**
