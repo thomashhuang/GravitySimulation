@@ -2,20 +2,35 @@ package edu.illinois.thomash3;
 
 public abstract class PhysicsBody {
 
-    protected double xVelocity;
+    protected double xVelocity; // m/s
 
     protected double yVelocity;
 
-    protected double xPosition;
+    protected double xPosition; // m
 
     protected double yPosition;
 
     /**
+     * Parameterized constructor.
+     * @param xVelocity
+     * @param yVelocity
+     * @param xPosition
+     * @param yPosition
+     */
+    public PhysicsBody(double xVelocity, double yVelocity, double xPosition, double yPosition) {
+        this.xVelocity = xVelocity;
+        this.yVelocity = yVelocity;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+    }
+
+    /**
      * Apply gravitational force of another object to adjust the trajectory of this object.
+     * Satellites will have no gravitational influence on PhysicsBodies because getMass() returns zero.
      *
      * @param other the body exerting the force on this object.
      */
-    public void applyGravity(CelestialBody other, double gravitationalConstant) {
+    public void applyGravity(PhysicsBody other, double gravitationalConstant) {
 
         double xAcceleration = Math.cos(gravitationalConstant * other.getMass()
                 / Math.pow(getDistance(other), 2));
@@ -48,7 +63,7 @@ public abstract class PhysicsBody {
      * @param other the body to get the distance to.
      * @return distance.
      */
-    public double getDistance(CelestialBody other) {
+    public double getDistance(PhysicsBody other) {
 
         double xDiff = other.xPosition - this.xPosition;
         double yDiff = other.yPosition - this.yPosition;

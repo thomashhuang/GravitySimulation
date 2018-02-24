@@ -5,7 +5,12 @@ package edu.illinois.thomash3;
  */
 public class CelestialBody extends PhysicsBody {
 
-    private double mass;
+    private double mass; // kg
+
+    public CelestialBody(double xVelocity, double yVelocity, double xPosition, double yPosition, double mass) {
+        super(xVelocity, yVelocity, xPosition, yPosition);
+        this.mass = mass;
+    }
 
     /**
      * Return the mass of this body.

@@ -3,7 +3,9 @@ package edu.illinois.thomash3;
 import com.sun.tools.classfile.Opcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * A 2D universe of stars, planets, and satellites.
@@ -12,7 +14,7 @@ public class Universe {
 
     private ArrayList<PhysicsBody> objectsInUniverse;
 
-    final double GRAVITATIONAL_CONSTANT;
+    private final double GRAVITATIONAL_CONSTANT;
 
     /**
      * Default constructor sets gravitational constant to the real-life gravitational constant.
@@ -45,13 +47,51 @@ public class Universe {
     }
 
     /**
-     * Apply the gravitational forces between two objects.
+     * Add a collection of objects to the Universe.
+     *
+     * @param bodies Variadic collection of PhysicsBodies.
+     */
+    public void addBody(PhysicsBody... bodies) {
+        objectsInUniverse.addAll(Arrays.asList(bodies));
+    }
+
+    /**
+     * Tick the universe forward by one second.
+     * Applies movement of all bodies based on their velocities.
+     * applyGravity should be called immediately after.
+     */
+    public void tick() {
+        for (PhysicsBody body : objectsInUniverse) {
+            body.updateLocation();
+        }
+    }
+
+    /**
+     * Apply the gravitational forces between all pairs of objects in the universe.
+     */
+    public void applyGravity() {
+        for (int i = 0; i < objectsInUniverse.size() - 1; i++) {
+            for (int j = i + 1; j < objectsInUniverse.size(); j++) {
+                applyGravity(objectsInUniverse.get(i), objectsInUniverse.get(j));
+            }
+        }
+
+    }
+
+    /**
+     * Update the velocities of two bodies in this universe due to their gravitational interaction.
      *
      * @param first the first body.
      * @param second the second body.
      */
-    public void applyGravity(PhysicsBody first, PhysicsBody second) {
+    private void applyGravity(PhysicsBody first, PhysicsBody second) {
 
+        first.applyGravity(second, GRAVITATIONAL_CONSTANT);
+        second.applyGravity(first, GRAVITATIONAL_CONSTANT);
+    }
+
+    public List<PhysicsBody> getObjectsInUniverse() {
+        return objectsInUniverse;
     }
 
 }
