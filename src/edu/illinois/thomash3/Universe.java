@@ -21,7 +21,7 @@ public class Universe {
      * Universe is empty by default.
      */
     public Universe() {
-        this(6.67 * Math.pow(10, -11));
+        this(6.674 * Math.pow(10, -11));
     }
 
     /**
@@ -86,8 +86,12 @@ public class Universe {
      */
     private void applyGravity(PhysicsBody first, PhysicsBody second) {
 
-        first.applyGravity(second, GRAVITATIONAL_CONSTANT);
-        second.applyGravity(first, GRAVITATIONAL_CONSTANT);
+        if (first.getClass() == CelestialBody.class) {
+            second.applyGravity((CelestialBody) first, GRAVITATIONAL_CONSTANT);
+        }
+        if (second.getClass() == CelestialBody.class) {
+            first.applyGravity((CelestialBody) second, GRAVITATIONAL_CONSTANT);
+        }
     }
 
     public List<PhysicsBody> getObjectsInUniverse() {

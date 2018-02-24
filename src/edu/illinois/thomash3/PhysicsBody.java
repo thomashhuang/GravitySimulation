@@ -12,6 +12,7 @@ public abstract class PhysicsBody {
 
     /**
      * Parameterized constructor.
+     *
      * @param xVelocity
      * @param yVelocity
      * @param xPosition
@@ -25,32 +26,36 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Apply gravitational force of another object to adjust the trajectory of this object.
-     * Satellites will have no gravitational influence on PhysicsBodies because getMass() returns zero.
+     * Apply gravitational force of a CelestialBody to adjust the trajectory of this object.
      *
      * @param other the body exerting the force on this object.
      */
-    public void applyGravity(PhysicsBody other, double gravitationalConstant) {
+    public void applyGravity(CelestialBody other, double gravitationalConstant) {
 
-        double xAcceleration = Math.cos(gravitationalConstant * other.getMass()
-                / Math.pow(getDistance(other), 2));
-        if (this.xPosition > other.xPosition) { //if the other body is on the left
-            xAcceleration *= -1;
+        if (this.xPosition == other.xPosition && this.yPosition == other.yPosition) { //objects in same place.
+            return;
         }
+
+        double totalAcceleration = gravitationalConstant * other.getMass() /
+                Math.pow(getDistance(other), 2); //Gm/r^2
+
+        double xPositionDifference = other.xPosition - this.xPosition;
+
+        double xAcceleration = totalAcceleration *
+                (xPositionDifference / getDistance(other)); //find x component
 
         xVelocity += xAcceleration;
 
-        double yAcceleration = Math.sin(gravitationalConstant * other.getMass()
-                / Math.pow(getDistance(other), 2));
-        if (this.yPosition > other.yPosition) { //if the other body is below
-            yAcceleration *= -1;
-        }
+        double yPositionDifference = other.yPosition - this.yPosition;
+
+        double yAcceleration = totalAcceleration *
+                (yPositionDifference / getDistance(other)); //find y component
 
         yVelocity += yAcceleration;
     }
 
     /**
-     * Tick the simulation by one unit of time, adjusting position according to velocity.
+     * Tick the simulation by one second, adjusting position according to velocity.
      */
     public void updateLocation() {
         xPosition += xVelocity;
@@ -58,7 +63,7 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Get the distance to another celestial body.
+     * Get the distance to another PhysicsBody.
      *
      * @param other the body to get the distance to.
      * @return distance.

@@ -7,8 +7,11 @@ public class CelestialBody extends PhysicsBody {
 
     private double mass; // kg
 
-    public CelestialBody(double xVelocity, double yVelocity, double xPosition, double yPosition, double mass) {
+    private double radius; //m
+
+    public CelestialBody(double xVelocity, double yVelocity, double xPosition, double yPosition, double radius, double mass) {
         super(xVelocity, yVelocity, xPosition, yPosition);
+        this.radius = radius;
         this.mass = mass;
     }
 
@@ -19,6 +22,10 @@ public class CelestialBody extends PhysicsBody {
      */
     public double getMass() {
         return mass;
+    }
+
+    public double getRadius() {
+        return radius;
     }
 
 }
