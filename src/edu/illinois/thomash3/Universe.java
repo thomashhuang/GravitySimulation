@@ -61,12 +61,13 @@ public class Universe {
         for (PhysicsBody body : objectsInUniverse) {
             body.updateLocation();
         }
+        this.applyGravity();
     }
 
     /**
      * Apply the gravitational forces between all pairs of objects in the universe.
      */
-    public void applyGravity() {
+    private void applyGravity() {
         for (int i = 0; i < objectsInUniverse.size() - 1; i++) {
             for (int j = i + 1; j < objectsInUniverse.size(); j++) {
                 applyGravity(objectsInUniverse.get(i), objectsInUniverse.get(j));

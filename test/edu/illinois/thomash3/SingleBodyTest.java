@@ -44,7 +44,6 @@ public class SingleBodyTest {
     public void staticCelestialBody() {
         for (int i = 0; i < 1000; i++) {
             earthIssSystem.tick();
-            earthIssSystem.applyGravity();
         }
         assertEquals(0.0, earth.getXPosition(), .000001);
         assertEquals(0.0, earth.getYPosition(), .000001);
@@ -61,11 +60,12 @@ public class SingleBodyTest {
 
         earthIssSystem.addBody(fallingObject);
 
-        earthIssSystem.applyGravity();
+        earthIssSystem.tick();
         earthIssSystem.tick();
 
         assertTrue(fallingObject.getYVelocity() < 0
-                && fallingObject.getYVelocity() > -10);
+                && fallingObject.getYVelocity() > -20);
+        System.out.println(fallingObject.getYPosition());
         assertTrue(fallingObject.getYPosition() < earth.getRadius() + 400000);
         assertEquals(0.0, fallingObject.getXPosition(), .000001);
         assertEquals(0.0, fallingObject.getXVelocity(), .000001);
@@ -77,7 +77,6 @@ public class SingleBodyTest {
 
         for (int i = 0; i < 60; i++) {
             earthIssSystem.tick();
-            earthIssSystem.applyGravity();
         }
 
 
@@ -99,7 +98,6 @@ public class SingleBodyTest {
 
         for (int i = 0; i < ORBITAL_PERIOD; i++) {
             earthIssSystem.tick();
-            earthIssSystem.applyGravity();
         }
 
         assertEquals(earth.getRadius() + 400000, iss.getXPosition(), 10);
@@ -121,7 +119,6 @@ public class SingleBodyTest {
 
         for (int i = 0; i < ORBITAL_PERIOD; i++) {
             earthIssSystem.tick();
-            earthIssSystem.applyGravity();
         }
 
         assertEquals(earth.getRadius() + 400000, iss.getXPosition(), 10);
