@@ -9,4 +9,15 @@ public class Satellite extends PhysicsBody {
         super(xVelocity, yVelocity, xPosition, yPosition);
     }
 
+    /**
+     * Find this satellite's altitude above a certain CelestialBody, such as a planet or moon.
+     *
+     * @param body the CelestialBody
+     * @return altitude above the surface.
+     */
+    public double getAltitude(CelestialBody body) {
+        double distance = this.getDistance(body);
+        return distance - body.getRadius();
+    }
+
 }
