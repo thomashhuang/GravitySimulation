@@ -5,6 +5,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Simulation {
 
+    /**
+     * Main method for simulation.
+     * Gives users the option to create their own Celestial Bodies, Satellites.
+     * Users can also set the Universal Gravitational Constant, if that's what you're into.
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
@@ -15,6 +22,8 @@ public class Simulation {
         System.out.println("After how many seconds should the Universe display its state?");
 
         tickRate = scan.nextInt();
+
+        scan.close();
 
         simulateUniverse(universe, tickRate);
 
@@ -85,9 +94,30 @@ public class Simulation {
                 System.out.println("Creating empty universe.");
             }
 
-        } else if (!input.equalsIgnoreCase("c")) {
+        } else if (input.equalsIgnoreCase("c")) {
+
+            System.out.println("Define a gravitational constant? (Y/N)");
+            String gravityConstant = scan.nextLine();
+
+            if (gravityConstant.equalsIgnoreCase("y")) { //User wants to play god.
+
+                System.out.println("Universal Gravitational Constant: ");
+                String constant = scan.nextLine();
+                double g;
+
+                try {
+                    g = Double.parseDouble(constant);
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("Illegal Universal Gravitational Constant");
+                }
+
+                universe = new Universe(g);
+            }
+
+        } else {
             System.out.println("I don't understand.");
             System.out.println("Creating empty universe.");
+
         }
 
         customizeUniverse(universe, scan);
@@ -96,6 +126,11 @@ public class Simulation {
 
     }
 
+    /**
+     * Set up Earth-ISS system.
+     *
+     * @return Universe with the Earth-ISS system.
+     */
     private static Universe earthIssSystem() {
         Universe earthIss = new Universe();
 
@@ -110,6 +145,11 @@ public class Simulation {
         return earthIss;
     }
 
+    /**
+     * Set up Earth-Moon system.
+     *
+     * @return Universe with Earth-moon system.
+     */
     private static Universe earthMoonSystem() {
         Universe earthMoon = new Universe();
 
@@ -124,6 +164,12 @@ public class Simulation {
         return earthMoon;
     }
 
+    /**
+     * Allow the user to add CelestialBodies or Satellites to the Universe.
+     *
+     * @param universe the universe to customize.
+     * @param scan scanner.
+     */
     private static void customizeUniverse(Universe universe, Scanner scan) {
 
         String input = "";

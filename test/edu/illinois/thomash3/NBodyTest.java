@@ -69,6 +69,27 @@ public class NBodyTest {
         assertTrue(moonDisplacement > earthDisplacement);
     }
 
+    @Test
+    public void universeWithNoGravity() {
+        //Here, we set the universal gravitational constant to 0.
+        //Gravity does not exist anymore.
+        //The moon should travel straight up in the positive Y direction, and the earth should not move at all.
 
+        earthMoonSystem = new Universe(0);
+        earthMoonSystem.addBody(earth, moon);
+
+        for (int i = 0; i < 100000; i++) {
+            earthMoonSystem.tick();
+        }
+
+        assertEquals(0.0, earth.getXPosition(), .000001);
+        assertEquals(0.0, earth.getYPosition(), .000001);
+        assertEquals(0.0, earth.getXVelocity(), .000001);
+        assertEquals(0.0, earth.getYVelocity(), .000001);
+
+        assertEquals(0.0, moon.getXVelocity(), .000001);
+
+
+    }
 
 }
