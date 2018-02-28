@@ -25,10 +25,10 @@ public class NBodyTest {
         /*
          */
         earthMoonSystem = new Universe();
-        earth = new CelestialBody(0,0,0,0,
+        earth = new CelestialBody("Earth", 0,0,0,0,
                 6371000, 5.9722 * Math.pow(10, 24));
 
-        moon = new CelestialBody(0, 1022,384399000, 0,
+        moon = new CelestialBody("The Moon",0, 1022,384399000, 0,
                 1737000, 7.342 * Math.pow(10, 22));
 
         earthMoonSystem.addBody(earth, moon);

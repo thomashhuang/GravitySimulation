@@ -22,9 +22,13 @@ public class SingleBodyTest {
         ISS orbits at roughly 400km above earth's surface.
          */
         earthIssSystem = new Universe();
-        earth = new CelestialBody(0,0,0,0, 6371000, 5.9722 * Math.pow(10, 24));
-        iss = new Satellite(0, 7670,
+
+        earth = new CelestialBody("Earth", 0,0,0,0,
+                6371000, 5.9722 * Math.pow(10, 24));
+
+        iss = new Satellite( "ISS", 0, 7670,
                 earth.getRadius() + 400000, 0);
+
         earthIssSystem.addBody(earth, iss);
     }
 
@@ -55,7 +59,7 @@ public class SingleBodyTest {
     public void earthFreefall() {
 
         //Free falling body that starts at the height of the ISS.
-        PhysicsBody fallingObject = new Satellite(0,0,0,
+        PhysicsBody fallingObject = new Satellite("Falling Thing", 0,0,0,
                 earth.getRadius() + 400000);
 
         earthIssSystem.addBody(fallingObject);
@@ -70,6 +74,11 @@ public class SingleBodyTest {
         assertEquals(0.0, fallingObject.getXPosition(), .000001);
         assertEquals(0.0, fallingObject.getXVelocity(), .000001);
 
+    }
+
+    @Test
+    public void satelliteAltitude() {
+        assertEquals(400000, iss.getAltitude(earth), .000001);
     }
 
     @Test
