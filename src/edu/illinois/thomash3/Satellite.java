@@ -5,8 +5,8 @@ package edu.illinois.thomash3;
  */
 public class Satellite extends PhysicsBody {
 
-    public Satellite(double xVelocity, double yVelocity, double xPosition, double yPosition) {
-        super(xVelocity, yVelocity, xPosition, yPosition);
+    public Satellite(String name, double xVelocity, double yVelocity, double xPosition, double yPosition) {
+        super(name, xVelocity, yVelocity, xPosition, yPosition);
     }
 
     /**

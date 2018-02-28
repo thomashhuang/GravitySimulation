@@ -2,6 +2,7 @@ package edu.illinois.thomash3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class Universe {
 
-    private ArrayList<PhysicsBody> objectsInUniverse;
+    private List<PhysicsBody> objectsInUniverse;
 
     private final double GRAVITATIONAL_CONSTANT;
 
@@ -54,14 +55,14 @@ public class Universe {
 
     /**
      * Tick the universe forward by one second.
-     * Applies movement of all bodies based on their velocities.
-     * applyGravity should be called immediately after.
+     * Applies movement of all bodies based on their velocities then adjusts their velocities based on gravity.
      */
     public void tick() {
         for (PhysicsBody body : objectsInUniverse) {
             body.updateLocation();
         }
         this.applyGravity();
+        this.checkCollisions();
     }
 
     /**
@@ -89,6 +90,61 @@ public class Universe {
         }
         if (second.getClass() == CelestialBody.class) {
             first.applyGravity((CelestialBody) second, GRAVITATIONAL_CONSTANT);
+        }
+    }
+
+    /**
+     * Find out if any satellites crashed into celestial bodies.
+     * If so, remove them from the List of objects in the universe and print that they crashed.
+     */
+    private void checkCollisions() {
+
+        HashSet<PhysicsBody> satellitesToRemove = new HashSet<>();
+
+        for (PhysicsBody body : objectsInUniverse) {
+
+            if (body.getClass() == Satellite.class) {
+
+                for (PhysicsBody celestialBody : objectsInUniverse) {
+
+                    if (celestialBody.getClass() == Satellite.class) {
+                        continue;
+                    }
+
+                    Satellite satellite = (Satellite) body;
+                    if (satellite.getAltitude((CelestialBody) celestialBody) <= 0) {
+                        System.out.println(body.getName() + " crashed into " + celestialBody.getName());
+                        satellitesToRemove.add(body);
+                    }
+                }
+            }
+        }
+
+        objectsInUniverse.removeAll(satellitesToRemove);
+    }
+
+    /**
+     * Print information about the Physics Bodies in this universe.
+     */
+    public void printInformation() {
+        for (PhysicsBody body : objectsInUniverse) {
+
+            System.out.println(body.getName() + ":");
+
+            if (body.getClass() == CelestialBody.class) {
+
+                System.out.println("Mass: " + body.getMass());
+                System.out.println("Radius: " + body.getRadius());
+
+            } else {
+                System.out.println("Satellite:");
+            }
+
+            System.out.println("X: " + body.getXPosition());
+            System.out.println("Y: " + body.getYPosition());
+            System.out.println("X Velocity: " + body.getXVelocity());
+            System.out.println("Y Velocity: " + body.getYVelocity());
+            System.out.println();
         }
     }
 

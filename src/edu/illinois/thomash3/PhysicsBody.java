@@ -2,6 +2,8 @@ package edu.illinois.thomash3;
 
 public abstract class PhysicsBody {
 
+    protected String name;
+
     protected double xVelocity; // m/s
 
     protected double yVelocity;
@@ -18,7 +20,8 @@ public abstract class PhysicsBody {
      * @param xPosition
      * @param yPosition
      */
-    public PhysicsBody(double xVelocity, double yVelocity, double xPosition, double yPosition) {
+    public PhysicsBody(String name, double xVelocity, double yVelocity, double xPosition, double yPosition) {
+        this.name = name;
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
         this.xPosition = xPosition;
@@ -77,6 +80,10 @@ public abstract class PhysicsBody {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * If the PhysicsBody has sufficient mass to impact the orbit of other objects, this returns its mass.
      * Bodies with inconsequentially low mass will return 0.
@@ -85,6 +92,10 @@ public abstract class PhysicsBody {
      */
     public double getMass() {
         return 0;
+    }
+
+    public double getRadius() {
+        return  0;
     }
 
     public double getXPosition() {

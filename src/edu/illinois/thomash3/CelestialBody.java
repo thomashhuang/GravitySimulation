@@ -9,8 +9,8 @@ public class CelestialBody extends PhysicsBody {
 
     private double radius; //m
 
-    public CelestialBody(double xVelocity, double yVelocity, double xPosition, double yPosition, double radius, double mass) {
-        super(xVelocity, yVelocity, xPosition, yPosition);
+    public CelestialBody(String name, double xVelocity, double yVelocity, double xPosition, double yPosition, double radius, double mass) {
+        super(name, xVelocity, yVelocity, xPosition, yPosition);
         this.radius = radius;
         this.mass = mass;
     }
