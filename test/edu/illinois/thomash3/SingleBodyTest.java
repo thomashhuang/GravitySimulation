@@ -69,7 +69,6 @@ public class SingleBodyTest {
 
         assertTrue(fallingObject.getYVelocity() < 0
                 && fallingObject.getYVelocity() > -20);
-        System.out.println(fallingObject.getYPosition());
         assertTrue(fallingObject.getYPosition() < earth.getRadius() + 400000);
         assertEquals(0.0, fallingObject.getXPosition(), .000001);
         assertEquals(0.0, fallingObject.getXVelocity(), .000001);
@@ -79,6 +78,30 @@ public class SingleBodyTest {
     @Test
     public void satelliteAltitude() {
         assertEquals(400000, iss.getAltitude(earth), .000001);
+    }
+
+    @Test
+    public void satelliteImmediateCrash() {
+        PhysicsBody crasher = new Satellite("Crasher", 0, 0, 0, 0);
+        earthIssSystem.addBody(crasher);
+
+        assertEquals(3, earthIssSystem.getObjectsInUniverse().size());
+
+        earthIssSystem.tick();
+
+        assertEquals(2, earthIssSystem.getObjectsInUniverse().size());
+    }
+
+    @Test
+    public void satelliteDelayedCrash() {
+        PhysicsBody crasher = new Satellite("Crasher", 0, 0, 7000000, 0);
+        earthIssSystem.addBody(crasher);
+
+        for (int i = 0; i < 500; i++) {
+            earthIssSystem.tick();
+        }
+
+        assertEquals(2, earthIssSystem.getObjectsInUniverse().size());
     }
 
     @Test

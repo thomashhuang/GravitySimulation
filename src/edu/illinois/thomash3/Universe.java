@@ -136,8 +136,6 @@ public class Universe {
                 System.out.println("Mass: " + body.getMass());
                 System.out.println("Radius: " + body.getRadius());
 
-            } else {
-                System.out.println("Satellite:");
             }
 
             System.out.println("X: " + body.getXPosition());

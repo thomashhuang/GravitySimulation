@@ -22,11 +22,12 @@ public class Simulation {
 
     /**
      * Continuously update the universe and print information about it every few seconds.
-     * Will print once every second.
      *
      * @param tickRate The number of seconds in the universe between each print.
      */
     private static void simulateUniverse(Universe universe, int tickRate) {
+
+        System.out.println("t = 0");
 
         universe.printInformation();
 
@@ -42,7 +43,7 @@ public class Simulation {
             }
 
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 System.exit(0);
             }
@@ -198,7 +199,9 @@ public class Simulation {
                 System.out.println("I don't understand.");
             }
 
-            scan.nextLine();
+            if (!input.equalsIgnoreCase("f")) {
+                scan.nextLine();
+            }
 
         }
     }
